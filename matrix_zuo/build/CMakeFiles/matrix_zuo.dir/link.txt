@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/matrix_zuo.dir/src/matrix_zuo.cpp.o -o matrix_zuo 

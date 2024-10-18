@@ -1,0 +1,3 @@
+/home/stark/matrix_zuo/build/CMakeFiles/matrix_zuo.dir
+/home/stark/matrix_zuo/build/CMakeFiles/edit_cache.dir
+/home/stark/matrix_zuo/build/CMakeFiles/rebuild_cache.dir
