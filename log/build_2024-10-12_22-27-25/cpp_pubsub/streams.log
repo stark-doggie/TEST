@@ -1,0 +1,28 @@
+[0.045s] Invoking command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub -- -j1 -l1
+[0.132s] [35m[1mScanning dependencies of target talker[0m
+[0.385s] make[2]: 警告：文件“CMakeFiles/talker.dir/depend.make”的修改时间在未来 1.9 秒后
+[0.407s] [ 50%] [32mBuilding CXX object CMakeFiles/talker.dir/src/rectNode-zuo.cpp.o[0m
+[5.433s] [100%] [32m[1mLinking CXX executable talker[0m
+[5.897s] make[2]: 警告：检测到时钟错误。您的构建版本可能是不完整的。
+[5.911s] [100%] Built target talker
+[5.928s] Invoked command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub -- -j1 -l1
+[5.995s] Invoking command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub
+[6.011s] -- Install configuration: ""
+[6.015s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/lib/cpp_pubsub/talker
+[6.049s] -- Set runtime path of "/media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/lib/cpp_pubsub/talker" to ""
+[6.052s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/package_run_dependencies/cpp_pubsub
+[6.053s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/parent_prefix_path/cpp_pubsub
+[6.055s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/ament_prefix_path.sh
+[6.056s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/ament_prefix_path.dsv
+[6.057s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/path.sh
+[6.058s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/path.dsv
+[6.059s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.bash
+[6.060s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.sh
+[6.061s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.zsh
+[6.061s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.dsv
+[6.062s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/package.dsv
+[6.067s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/packages/cpp_pubsub
+[6.068s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/cmake/cpp_pubsubConfig.cmake
+[6.069s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/cmake/cpp_pubsubConfig-version.cmake
+[6.071s] -- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/package.xml
+[6.078s] Invoked command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub

@@ -1,0 +1,24 @@
+[35m[1mScanning dependencies of target talker[0m
+make[2]: 警告：文件“CMakeFiles/talker.dir/depend.make”的修改时间在未来 0.075 秒后
+[ 50%] [32mBuilding CXX object CMakeFiles/talker.dir/src/rectNode-zuo.cpp.o[0m
+[100%] [32m[1mLinking CXX executable talker[0m
+make[2]: 警告：检测到时钟错误。您的构建版本可能是不完整的。
+[100%] Built target talker
+-- Install configuration: ""
+-- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/lib/cpp_pubsub/talker
+-- Set runtime path of "/media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/lib/cpp_pubsub/talker" to ""
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/package_run_dependencies/cpp_pubsub
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/parent_prefix_path/cpp_pubsub
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/ament_prefix_path.sh
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/ament_prefix_path.dsv
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/path.sh
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/path.dsv
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.bash
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.sh
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.zsh
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.dsv
+-- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/package.dsv
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/packages/cpp_pubsub
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/cmake/cpp_pubsubConfig.cmake
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/cmake/cpp_pubsubConfig-version.cmake
+-- Up-to-date: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/package.xml

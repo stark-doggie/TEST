@@ -1,0 +1,85 @@
+[0.034s] Invoking command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /media/sf_zuo-sharefiles/ROSproject/turtle_rec/cpp_pubsub -DCMAKE_INSTALL_PREFIX=/media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub
+[0.361s] -- The C compiler identification is GNU 9.4.0
+[0.592s] -- The CXX compiler identification is GNU 9.4.0
+[0.619s] -- Check for working C compiler: /usr/bin/cc
+[0.820s] -- Check for working C compiler: /usr/bin/cc -- works
+[0.824s] -- Detecting C compiler ABI info
+[1.014s] -- Detecting C compiler ABI info - done
+[1.048s] -- Detecting C compile features
+[1.050s] -- Detecting C compile features - done
+[1.069s] -- Check for working CXX compiler: /usr/bin/c++
+[1.267s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[1.271s] -- Detecting CXX compiler ABI info
+[1.469s] -- Detecting CXX compiler ABI info - done
+[1.500s] -- Detecting CXX compile features
+[1.502s] -- Detecting CXX compile features - done
+[1.527s] -- Found ament_cmake: 0.9.12 (/opt/ros/foxy/share/ament_cmake/cmake)
+[1.573s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[1.574s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[2.007s] -- Found rclcpp: 2.4.3 (/opt/ros/foxy/share/rclcpp/cmake)
+[2.107s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.124s] -- Found rosidl_adapter: 1.3.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[2.257s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[2.322s] -- Found FastRTPS: /opt/ros/foxy/include  
+[2.482s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.632s] -- Found rmw_implementation_cmake: 1.0.4 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[2.640s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.653s] -- Looking for pthread.h
+[2.853s] -- Looking for pthread.h - found
+[2.855s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[3.040s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[3.042s] -- Looking for pthread_create in pthreads
+[3.199s] -- Looking for pthread_create in pthreads - not found
+[3.201s] -- Looking for pthread_create in pthread
+[3.375s] -- Looking for pthread_create in pthread - found
+[3.379s] -- Found Threads: TRUE  
+[3.741s] -- Found geometry_msgs: 2.0.5 (/opt/ros/foxy/share/geometry_msgs/cmake)
+[3.828s] -- Found ament_lint_auto: 0.9.8 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[4.038s] -- Added test 'copyright' to check source files copyright and LICENSE
+[4.057s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[4.058s] -- Configured cppcheck include dirs: 
+[4.059s] -- Configured cppcheck exclude dirs and/or files: 
+[4.071s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[4.072s] -- Configured cpplint exclude dirs and/or files: 
+[4.078s] -- Added test 'lint_cmake' to check CMake code style
+[4.090s] -- Added test 'uncrustify' to check C / C++ code style
+[4.091s] -- Configured uncrustify additional arguments: 
+[4.095s] -- Added test 'xmllint' to check XML markup files
+[4.129s] -- Configuring done
+[4.192s] -- Generating done
+[4.225s] -- Build files have been written to: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub
+[4.234s] Invoked command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake /media/sf_zuo-sharefiles/ROSproject/turtle_rec/cpp_pubsub -DCMAKE_INSTALL_PREFIX=/media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub
+[4.239s] Invoking command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub -- -j1 -l1
+[4.261s] make: 警告：文件“Makefile”的修改时间在未来 0.68 秒后
+[4.295s] make[1]: 警告：文件“CMakeFiles/Makefile2”的修改时间在未来 0.67 秒后
+[4.300s] make[2]: 警告：文件“CMakeFiles/talker.dir/flags.make”的修改时间在未来 0.63 秒后
+[4.313s] [35m[1mScanning dependencies of target talker[0m
+[4.663s] make[2]: 警告：检测到时钟错误。您的构建版本可能是不完整的。
+[4.672s] make[2]: 警告：文件“CMakeFiles/talker.dir/flags.make”的修改时间在未来 0.25 秒后
+[4.693s] [ 50%] [32mBuilding CXX object CMakeFiles/talker.dir/src/rectNode-zuo.cpp.o[0m
+[10.094s] [100%] [32m[1mLinking CXX executable talker[0m
+[10.575s] make[2]: 警告：检测到时钟错误。您的构建版本可能是不完整的。
+[10.591s] [100%] Built target talker
+[10.593s] make[1]: 警告：检测到时钟错误。您的构建版本可能是不完整的。
+[10.611s] make: 警告：检测到时钟错误。您的构建版本可能是不完整的。
+[10.612s] Invoked command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --build /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub -- -j1 -l1
+[10.664s] Invoking command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub
+[10.680s] -- Install configuration: ""
+[10.683s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/lib/cpp_pubsub/talker
+[10.718s] -- Set runtime path of "/media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/lib/cpp_pubsub/talker" to ""
+[10.726s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/package_run_dependencies/cpp_pubsub
+[10.731s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/parent_prefix_path/cpp_pubsub
+[10.735s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/ament_prefix_path.sh
+[10.737s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/ament_prefix_path.dsv
+[10.743s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/path.sh
+[10.746s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/environment/path.dsv
+[10.751s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.bash
+[10.755s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.sh
+[10.758s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.zsh
+[10.761s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/local_setup.dsv
+[10.765s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/package.dsv
+[10.769s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/ament_index/resource_index/packages/cpp_pubsub
+[10.773s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/cmake/cpp_pubsubConfig.cmake
+[10.777s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/cmake/cpp_pubsubConfig-version.cmake
+[10.780s] -- Installing: /media/sf_zuo-sharefiles/ROSproject/turtle_rec/install/cpp_pubsub/share/cpp_pubsub/package.xml
+[10.788s] Invoked command in '/media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=/opt/ros/foxy /usr/bin/cmake --install /media/sf_zuo-sharefiles/ROSproject/turtle_rec/build/cpp_pubsub
