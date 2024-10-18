@@ -1,0 +1,136 @@
+[0.000000] (-) TimerEvent: {}
+[0.000186] (cpp_pubsub) JobQueued: {'identifier': 'cpp_pubsub', 'dependencies': OrderedDict()}
+[0.000403] (cpp_pubsub) JobStarted: {'identifier': 'cpp_pubsub'}
+[0.006518] (cpp_pubsub) JobProgress: {'identifier': 'cpp_pubsub', 'progress': 'cmake'}
+[0.009815] (cpp_pubsub) Command: {'cmd': ['/usr/bin/cmake', '/home/stark/turtle_ooo/turtle_ws/src/cpp_pubsub', '-DCMAKE_INSTALL_PREFIX=/home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub'], 'cwd': '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub', 'env': OrderedDict([('USER', 'stark'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/stark'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '2372'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=a140d92394f6c6252ef64ee06707e662'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'stark'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'stark'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/stark-VirtualBox:@/tmp/.ICE-unix/2372,unix/stark-VirtualBox:/tmp/.ICE-unix/2372'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/e6d72d4a_d1a0_4aea_9fc5_e206ffd31716'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'zh_CN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.NPFKV2'), ('GNOME_TERMINAL_SERVICE', ':1.239'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=a140d92394f6c6252ef64ee06707e662'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.079362] (cpp_pubsub) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.099685] (-) TimerEvent: {}
+[0.138574] (cpp_pubsub) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.147788] (cpp_pubsub) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.214960] (-) TimerEvent: {}
+[0.226710] (cpp_pubsub) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.232617] (cpp_pubsub) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.233203] (cpp_pubsub) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.233895] (cpp_pubsub) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.238412] (cpp_pubsub) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.321107] (cpp_pubsub) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.321435] (-) TimerEvent: {}
+[0.321649] (cpp_pubsub) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.322217] (cpp_pubsub) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.322857] (cpp_pubsub) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.326285] (cpp_pubsub) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.429845] (-) TimerEvent: {}
+[0.450319] (cpp_pubsub) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[0.527087] (cpp_pubsub) StdoutLine: {'line': b'-- Found rclcpp: 16.0.10 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.529898] (-) TimerEvent: {}
+[0.562681] (cpp_pubsub) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.567594] (cpp_pubsub) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.582907] (cpp_pubsub) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.585365] (cpp_pubsub) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.595949] (cpp_pubsub) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.623819] (cpp_pubsub) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.625726] (cpp_pubsub) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.7 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[0.638890] (-) TimerEvent: {}
+[0.704625] (cpp_pubsub) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[0.723315] (cpp_pubsub) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[0.739111] (-) TimerEvent: {}
+[0.764924] (cpp_pubsub) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.775506] (cpp_pubsub) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[0.841144] (-) TimerEvent: {}
+[0.871614] (cpp_pubsub) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[0.871991] (cpp_pubsub) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[0.941376] (-) TimerEvent: {}
+[0.944843] (cpp_pubsub) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[0.951893] (cpp_pubsub) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[1.018400] (cpp_pubsub) StdoutLine: {'line': b'-- Found geometry_msgs: 4.2.4 (/opt/ros/humble/share/geometry_msgs/cmake)\n'}
+[1.036168] (cpp_pubsub) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[1.041526] (-) TimerEvent: {}
+[1.122984] (cpp_pubsub) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[1.123447] (cpp_pubsub) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[1.123921] (cpp_pubsub) StdoutLine: {'line': b'-- Configured cppcheck include dirs: \n'}
+[1.124227] (cpp_pubsub) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[1.125783] (cpp_pubsub) StdoutLine: {'line': b"-- Added test 'cpplint' to check C / C++ code against the Google style\n"}
+[1.126128] (cpp_pubsub) StdoutLine: {'line': b'-- Configured cpplint exclude dirs and/or files: \n'}
+[1.127026] (cpp_pubsub) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[1.128268] (cpp_pubsub) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[1.128578] (cpp_pubsub) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[1.130593] (cpp_pubsub) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[1.131163] (cpp_pubsub) StdoutLine: {'line': b'-- Configuring done\n'}
+[1.142029] (-) TimerEvent: {}
+[1.142301] (cpp_pubsub) StdoutLine: {'line': b'-- Generating done\n'}
+[1.147112] (cpp_pubsub) StdoutLine: {'line': b'-- Build files have been written to: /home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub\n'}
+[1.153394] (cpp_pubsub) CommandEnded: {'returncode': 0}
+[1.154157] (cpp_pubsub) JobProgress: {'identifier': 'cpp_pubsub', 'progress': 'build'}
+[1.155322] (cpp_pubsub) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub', '--', '-j1', '-l1'], 'cwd': '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub', 'env': OrderedDict([('USER', 'stark'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/stark'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '2372'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=a140d92394f6c6252ef64ee06707e662'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'stark'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'stark'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/stark-VirtualBox:@/tmp/.ICE-unix/2372,unix/stark-VirtualBox:/tmp/.ICE-unix/2372'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/e6d72d4a_d1a0_4aea_9fc5_e206ffd31716'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'zh_CN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.NPFKV2'), ('GNOME_TERMINAL_SERVICE', ':1.239'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=a140d92394f6c6252ef64ee06707e662'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[1.222163] (cpp_pubsub) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/talker.dir/src/circleNode-zuo.cpp.o\x1b[0m\n'}
+[1.242094] (-) TimerEvent: {}
+[1.342934] (-) TimerEvent: {}
+[1.443719] (-) TimerEvent: {}
+[1.544411] (-) TimerEvent: {}
+[1.646007] (-) TimerEvent: {}
+[1.747875] (-) TimerEvent: {}
+[1.859069] (-) TimerEvent: {}
+[1.963259] (-) TimerEvent: {}
+[2.064933] (-) TimerEvent: {}
+[2.181493] (-) TimerEvent: {}
+[2.285869] (-) TimerEvent: {}
+[2.397622] (-) TimerEvent: {}
+[2.508917] (-) TimerEvent: {}
+[2.609556] (-) TimerEvent: {}
+[2.711552] (-) TimerEvent: {}
+[2.825483] (-) TimerEvent: {}
+[2.934099] (-) TimerEvent: {}
+[3.042125] (-) TimerEvent: {}
+[3.158600] (-) TimerEvent: {}
+[3.261400] (-) TimerEvent: {}
+[3.363792] (-) TimerEvent: {}
+[3.475344] (-) TimerEvent: {}
+[3.575913] (-) TimerEvent: {}
+[3.682686] (-) TimerEvent: {}
+[3.814992] (-) TimerEvent: {}
+[3.925152] (-) TimerEvent: {}
+[4.025769] (-) TimerEvent: {}
+[4.141575] (-) TimerEvent: {}
+[4.242172] (-) TimerEvent: {}
+[4.342879] (-) TimerEvent: {}
+[4.462316] (-) TimerEvent: {}
+[4.572117] (-) TimerEvent: {}
+[4.674415] (-) TimerEvent: {}
+[4.774996] (-) TimerEvent: {}
+[4.891369] (-) TimerEvent: {}
+[5.003017] (-) TimerEvent: {}
+[5.111677] (-) TimerEvent: {}
+[5.212168] (-) TimerEvent: {}
+[5.319435] (-) TimerEvent: {}
+[5.422692] (-) TimerEvent: {}
+[5.477148] (cpp_pubsub) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable talker\x1b[0m\n'}
+[5.522890] (-) TimerEvent: {}
+[5.623294] (-) TimerEvent: {}
+[5.729038] (-) TimerEvent: {}
+[5.833062] (-) TimerEvent: {}
+[5.839141] (cpp_pubsub) StdoutLine: {'line': b'[100%] Built target talker\n'}
+[5.851172] (cpp_pubsub) CommandEnded: {'returncode': 0}
+[5.883682] (cpp_pubsub) JobProgress: {'identifier': 'cpp_pubsub', 'progress': 'install'}
+[5.890188] (cpp_pubsub) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub'], 'cwd': '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub', 'env': OrderedDict([('USER', 'stark'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/stark'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '2372'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=a140d92394f6c6252ef64ee06707e662'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'stark'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'stark'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/stark-VirtualBox:@/tmp/.ICE-unix/2372,unix/stark-VirtualBox:/tmp/.ICE-unix/2372'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/e6d72d4a_d1a0_4aea_9fc5_e206ffd31716'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'zh_CN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.NPFKV2'), ('GNOME_TERMINAL_SERVICE', ':1.239'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=a140d92394f6c6252ef64ee06707e662'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[5.898636] (cpp_pubsub) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[5.899413] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/lib/cpp_pubsub/talker\n'}
+[5.901854] (cpp_pubsub) StdoutLine: {'line': b'-- Set runtime path of "/home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/lib/cpp_pubsub/talker" to ""\n'}
+[5.902606] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/ament_index/resource_index/package_run_dependencies/cpp_pubsub\n'}
+[5.903581] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/ament_index/resource_index/parent_prefix_path/cpp_pubsub\n'}
+[5.904268] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/environment/ament_prefix_path.sh\n'}
+[5.904439] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/environment/ament_prefix_path.dsv\n'}
+[5.904593] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/environment/path.sh\n'}
+[5.905183] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/environment/path.dsv\n'}
+[5.905351] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/local_setup.bash\n'}
+[5.905516] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/local_setup.sh\n'}
+[5.906570] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/local_setup.zsh\n'}
+[5.906772] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/local_setup.dsv\n'}
+[5.906944] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/package.dsv\n'}
+[5.907251] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/ament_index/resource_index/packages/cpp_pubsub\n'}
+[5.907321] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/cmake/cpp_pubsubConfig.cmake\n'}
+[5.908777] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/cmake/cpp_pubsubConfig-version.cmake\n'}
+[5.908924] (cpp_pubsub) StdoutLine: {'line': b'-- Installing: /home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub/share/cpp_pubsub/package.xml\n'}
+[5.915372] (cpp_pubsub) CommandEnded: {'returncode': 0}
+[5.933168] (-) TimerEvent: {}
+[5.951211] (cpp_pubsub) JobEnded: {'identifier': 'cpp_pubsub', 'rc': 0}
+[5.952220] (-) EventReactorShutdown: {}

@@ -1,0 +1,6 @@
+Invoking command in '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/stark/turtle_ooo/turtle_ws/src/cpp_pubsub -DCMAKE_INSTALL_PREFIX=/home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub
+Invoked command in '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/stark/turtle_ooo/turtle_ws/src/cpp_pubsub -DCMAKE_INSTALL_PREFIX=/home/stark/turtle_ooo/turtle_ws/install/cpp_pubsub
+Invoking command in '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub -- -j1 -l1
+Invoked command in '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub -- -j1 -l1
+Invoking command in '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub
+Invoked command in '/home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/stark/turtle_ooo/turtle_ws/build/cpp_pubsub
