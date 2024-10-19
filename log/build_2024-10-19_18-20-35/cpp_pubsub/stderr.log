@@ -1,0 +1,3 @@
+[01m[K/media/sf_zuo-sharefiles/ROSproject/turtle_chase/cpp_pubsub/src/chase-zuo.cpp:23:12:[m[K [01;35m[Kwarning: [m[K‘[01m[Kg_turtlecount[m[K’ initialized and declared ‘[01m[Kextern[m[K’
+   23 | extern int [01;35m[Kg_turtlecount[m[K=1;
+      |            [01;35m[K^~~~~~~~~~~~~[m[K

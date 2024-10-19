@@ -1,0 +1,4 @@
+Invoking command in '/media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub -- -j1 -l1
+Invoked command in '/media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub -- -j1 -l1
+Invoking command in '/media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub
+Invoked command in '/media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub
