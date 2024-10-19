@@ -1,0 +1,62 @@
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_870ff/fast && make: 警告：文件“Makefile”的修改时间在未来 1.7 秒后
+/usr/bin/make -f CMakeFiles/cmTC_870ff.dir/build.make CMakeFiles/cmTC_870ff.dir/build
+make[1]: 进入目录“/media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub/CMakeFiles/CMakeTmp”
+make[1]: 警告：文件“CMakeFiles/cmTC_870ff.dir/flags.make”的修改时间在未来 1.7 秒后
+Building C object CMakeFiles/cmTC_870ff.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_870ff.dir/src.c.o   -c /media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_870ff
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_870ff.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    CMakeFiles/cmTC_870ff.dir/src.c.o  -o cmTC_870ff 
+/usr/bin/ld: CMakeFiles/cmTC_870ff.dir/src.c.o: in function `main':
+src.c:(.text+0x46): undefined reference to `pthread_create'
+/usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
+/usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_870ff.dir/build.make:87：cmTC_870ff] 错误 1
+make[1]: 离开目录“/media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub/CMakeFiles/CMakeTmp”
+make: *** [Makefile:121：cmTC_870ff/fast] 错误 2
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_d1357/fast && make: 警告：文件“Makefile”的修改时间在未来 1.7 秒后
+/usr/bin/make -f CMakeFiles/cmTC_d1357.dir/build.make CMakeFiles/cmTC_d1357.dir/build
+make[1]: 进入目录“/media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub/CMakeFiles/CMakeTmp”
+make[1]: 警告：文件“CMakeFiles/cmTC_d1357.dir/flags.make”的修改时间在未来 1.7 秒后
+Building C object CMakeFiles/cmTC_d1357.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_d1357.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_d1357
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d1357.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_d1357.dir/CheckFunctionExists.c.o  -o cmTC_d1357  -lpthreads 
+/usr/bin/ld: 找不到 -lpthreads
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_d1357.dir/build.make:87：cmTC_d1357] 错误 1
+make[1]: 离开目录“/media/sf_zuo-sharefiles/ROSproject/turtle_chase/build/cpp_pubsub/CMakeFiles/CMakeTmp”
+make: *** [Makefile:121：cmTC_d1357/fast] 错误 2
+
+
+
