@@ -12,7 +12,7 @@ set(TENSORRT_INCLUDE_DIR ${TENSORRT_ROOT}/include)
 set(TENSORRT_LIBRARY_DIR ${TENSORRT_ROOT}/lib)
 set(TENSORRT_LIBRARIES nvinfer nvinfer_plugin)
 
-if(NOT EXISTS ${TENSORRT_INCLUDE_DIR}NvInfer.h)
+if(NOT EXISTS ${TENSORRT_INCLUDE_DIR}/NvInfer.h)
     message(FATAL_ERROR "TensorRT headers not found in ${TENSORRT_INCLUDE_DIR}")
 endif()
 
