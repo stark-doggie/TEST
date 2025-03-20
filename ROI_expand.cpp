@@ -6,8 +6,12 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <filesystem>
+#include <string>
 
-// ×Ô¶¨ÒåµÄ Logger Àà£¬ÓÃÓÚ´¦Àí TensorRT µÄÈÕÖ¾ĞÅÏ¢
+namespace fs = std::filesystem;
+
+// è‡ªå®šä¹‰çš„ Logger ç±»ï¼Œç”¨äºå¤„ç† TensorRT çš„æ—¥å¿—ä¿¡æ¯
 class Logger : public nvinfer1::ILogger {
     void log(Severity severity, const char* msg) noexcept override {
         if (severity != Severity::kINFO) {
@@ -16,7 +20,7 @@ class Logger : public nvinfer1::ILogger {
     }
 };
 
-// ¶ÁÈ¡ .engine ÎÄ¼ş
+// è¯»å– .engine æ–‡ä»¶
 std::vector<char> read_engine_file(const std::string& engine_file_path) {
     std::ifstream file(engine_file_path, std::ios::binary);
     if (!file.good()) {
@@ -33,37 +37,59 @@ std::vector<char> read_engine_file(const std::string& engine_file_path) {
     return engine_data;
 }
 
-// Ê¹ÓÃ TensorRT Ä£ĞÍ½øĞĞ¼ì²â
-std::vector<cv::Mat> tensorrt_detection(const std::string& image_path, const std::string& engine_file_path) {
+// è‡ªå®šä¹‰å‡½æ•°æ¥å°è¯•è·å–ç»‘å®šç»´åº¦ï¼Œç›´æ¥ç¡¬ç¼–ç ç»´åº¦ä¿¡æ¯,æ­¤å¤„æ˜¯ä¸ºäº†å¼¥è¡¥TensorRTåº“æ²¡æœ‰çš„å‡½æ•°
+nvinfer1::Dims getBindingDimensionsCustom(int bindingIndex) {
+    nvinfer1::Dims dims;
+    dims.nbDims = 3; // è¾“å‡ºæ˜¯ 3 ç»´çš„
+    if (bindingIndex == 1) {
+        dims.d[0] = 1; // ç¬¬ä¸€ç»´å¤§å°
+        dims.d[1] = 640; // ç¬¬äºŒç»´å¤§å°
+        dims.d[2] = 640; // ç¬¬ä¸‰ç»´å¤§å°
+    } else {
+        std::cerr << "Unsupported binding index: " << bindingIndex << std::endl;
+        dims.nbDims = 0;
+    }
+    return dims;
+}
+
+// å®šä¹‰ä¸€ä¸ªç»“æ„ä½“æ¥å­˜å‚¨æ£€æµ‹ç»“æœ
+struct DetectionResult {
+    cv::Mat box; // å››ä¸ªç‚¹çš„åæ ‡
+    float score; // ç½®ä¿¡åº¦åˆ†æ•°
+    int class_id; // ç±»åˆ« ID
+};
+
+// ä½¿ç”¨ TensorRT æ¨¡å‹è¿›è¡Œæ£€æµ‹
+std::vector<DetectionResult> tensorrt_detection(const std::string& image_path, const std::string& engine_file_path) {
     Logger logger;
-    // ´´½¨ TensorRT ÔËĞĞÊ±¶ÔÏó
+    // åˆ›å»º TensorRT è¿è¡Œæ—¶å¯¹è±¡
     std::unique_ptr<nvinfer1::IRuntime> runtime(nvinfer1::createInferRuntime(logger));
     if (!runtime) {
         std::cerr << "Failed to create TensorRT runtime." << std::endl;
         return {};
     }
 
-    // ¶ÁÈ¡ .engine ÎÄ¼ş
+    // è¯»å– .engine æ–‡ä»¶
     std::vector<char> engine_data = read_engine_file(engine_file_path);
     if (engine_data.empty()) {
         return {};
     }
 
-    // ´Ó .engine ÎÄ¼şÊı¾İÖĞ·´ĞòÁĞ»¯Éú³É TensorRT ÒıÇæ
-    std::unique_ptr<nvinfer1::ICudaEngine> engine(runtime->deserializeCudaEngine(engine_data.data(), engine_data.size(), nullptr));
+    // ä» .engine æ–‡ä»¶æ•°æ®ä¸­ååºåˆ—åŒ–ç”Ÿæˆ TensorRT å¼•æ“
+    std::unique_ptr<nvinfer1::ICudaEngine> engine(runtime->deserializeCudaEngine(engine_data.data(), engine_data.size()));
     if (!engine) {
         std::cerr << "Failed to deserialize TensorRT engine." << std::endl;
         return {};
     }
 
-    // ´´½¨ TensorRT ÉÏÏÂÎÄ¶ÔÏó
+    // åˆ›å»º TensorRT ä¸Šä¸‹æ–‡å¯¹è±¡
     std::unique_ptr<nvinfer1::IExecutionContext> context(engine->createExecutionContext());
     if (!context) {
         std::cerr << "Failed to create TensorRT execution context." << std::endl;
         return {};
     }
 
-    // ¶ÁÈ¡ÊäÈëÍ¼Ïñ
+    // è¯»å–è¾“å…¥å›¾åƒ
     cv::Mat image = cv::imread(image_path);
     if (image.empty()) {
         std::cerr << "Failed to read image: " << image_path << std::endl;
@@ -75,65 +101,75 @@ std::vector<cv::Mat> tensorrt_detection(const std::string& image_path, const std
     cv::cvtColor(resized_image, resized_image, cv::COLOR_BGR2RGB);
     resized_image.convertTo(resized_image, CV_32F, 1.0 / 255.0);
 
-    // ×¼±¸ÊäÈëºÍÊä³ö»º³åÇø
+    // å‡†å¤‡è¾“å…¥å’Œè¾“å‡ºç¼“å†²åŒº
     std::vector<void*> buffers(2);
     size_t input_size = 3 * 640 * 640 * sizeof(float);
     cudaMalloc(&buffers[0], input_size);
     cudaMemcpy(buffers[0], resized_image.data, input_size, cudaMemcpyHostToDevice);
 
-    size_t output_size = engine->getBindingDimensions(1).d[0] * sizeof(float);
+    // è·å–è¾“å‡ºç»´åº¦
+    nvinfer1::Dims output_dims = getBindingDimensionsCustom(1);
+    size_t output_size = 1;
+    for (int i = 0; i < output_dims.nbDims; ++i) {
+        output_size *= output_dims.d[i];
+    }
+    output_size *= sizeof(float);
+
     cudaMalloc(&buffers[1], output_size);
 
-    // Ö´ĞĞÍÆÀí
+    // æ‰§è¡Œæ¨ç†
     context->executeV2(buffers.data());
 
-    std::vector<float> output_data(engine->getBindingDimensions(1).d[0]);
+    std::vector<float> output_data(output_size / sizeof(float));
     cudaMemcpy(output_data.data(), buffers[1], output_size, cudaMemcpyDeviceToHost);
 
     cudaFree(buffers[0]);
     cudaFree(buffers[1]);
 
-    std::vector<cv::Mat> boxes;
-    // ÕâÀï¼ÙÉèÊä³ö¸ñÊ½ÊÇ [x1, y1, x2, y2, score, class_id] µÄĞÎÊ½£¬ĞèÒª¸ù¾İÊµ¼ÊÄ£ĞÍÊä³öµ÷Õû
+    std::vector<DetectionResult> detections;
+    // è¿™é‡Œè¾“å‡ºæ ¼å¼æ˜¯ [x1, y1, x2, y2, score, class_id] çš„å½¢å¼ï¼Œéœ€è¦æ ¹æ®å®é™…æ¨¡å‹è¾“å‡ºè°ƒæ•´
     for (size_t i = 0; i < output_data.size(); i += 6) {
         float x1 = output_data[i] * image.cols / 640;
         float y1 = output_data[i + 1] * image.rows / 640;
         float x2 = output_data[i + 2] * image.cols / 640;
         float y2 = output_data[i + 3] * image.rows / 640;
+        float score = output_data[i + 4];
+        int class_id = static_cast<int>(output_data[i + 5]);
         cv::Mat box = (cv::Mat_<float>(4, 2) << x1, y1, x2, y1, x2, y2, x1, y2);
-        boxes.push_back(box);
+        detections.emplace_back(DetectionResult{box, score, class_id});
     }
 
-    return boxes;
+    return detections;
 }
 
-// ±£´æ¼ì²â½á¹ûµ½ txt ÎÄ¼ş
-void save_detection_result(const std::vector<cv::Mat>& boxes, const std::string& file_path) {
+// ä¿å­˜æ£€æµ‹ç»“æœåˆ° txt æ–‡ä»¶
+void save_detection_result(const std::vector<DetectionResult>& detections, const std::string& file_path) {
     std::ofstream file(file_path);
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << file_path << std::endl;
         return;
     }
 
-    for (const auto& box : boxes) {
+    for (const auto& detection : detections) {
+        const cv::Mat& box = detection.box;
         for (int i = 0; i < box.rows; ++i) {
             file << box.at<float>(i, 0) << " " << box.at<float>(i, 1) << " ";
         }
-        file << std::endl;
+        file << detection.score << " " << detection.class_id << std::endl;
     }
 
     file.close();
 }
 
-// ¶ÁÈ¡ txt ÎÄ¼şÖĞµÄËÄµãÊı¾İ
-std::vector<cv::Mat> read_detection_result(const std::string& file_path) {
+// è¯»å– txt æ–‡ä»¶ä¸­çš„å››ç‚¹æ•°æ®ã€åˆ†æ•°å’Œç±»åˆ« ID
+std::vector<DetectionResult> read_detection_result(const std::string& file_path) {
     std::ifstream file(file_path);
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << file_path << std::endl;
         return {};
     }
 
-    std::vector<cv::Mat> boxes;
+    std::vector<DetectionResult> detections;
     std::string line;
     while (std::getline(file, line)) {
         std::istringstream iss(line);
@@ -141,19 +177,29 @@ std::vector<cv::Mat> read_detection_result(const std::string& file_path) {
         for (int i = 0; i < 4; ++i) {
             iss >> box.at<float>(i, 0) >> box.at<float>(i, 1);
         }
-        boxes.push_back(box);
+        float score;
+        int class_id;
+        iss >> score >> class_id;
+        detections.emplace_back(DetectionResult{box, score, class_id});
     }
 
     file.close();
-    return boxes;
+    return detections;
 }
 
-// À©´ó¼ì²â¿ò
+// æ‰©å¤§æ£€æµ‹æ¡†
 cv::Mat expand_bounding_box(const cv::Mat& box, const cv::Mat& image, float expand_ratio = 0.1) {
-    float x_min = cv::min(box.col(0))[0];
-    float x_max = cv::max(box.col(0))[0];
-    float y_min = cv::min(box.col(1))[0];
-    float y_max = cv::max(box.col(1))[0];
+    std::vector<float> x_coords;
+    std::vector<float> y_coords;
+    for (int i = 0; i < box.rows; ++i) {
+        x_coords.push_back(box.at<float>(i, 0));
+        y_coords.push_back(box.at<float>(i, 1));
+    }
+
+    float x_min = *std::min_element(x_coords.begin(), x_coords.end());
+    float x_max = *std::max_element(x_coords.begin(), x_coords.end());
+    float y_min = *std::min_element(y_coords.begin(), y_coords.end());
+    float y_max = *std::max_element(y_coords.begin(), y_coords.end());
 
     float width = x_max - x_min;
     float height = y_max - y_min;
@@ -170,7 +216,7 @@ cv::Mat expand_bounding_box(const cv::Mat& box, const cv::Mat& image, float expa
     return new_box;
 }
 
-// Éú³É ROI ÇøÓò
+// ç”Ÿæˆ ROI åŒºåŸŸ
 cv::Mat generate_roi(const cv::Mat& image, const cv::Mat& box) {
     int x1 = static_cast<int>(box.at<float>(0, 0));
     int y1 = static_cast<int>(box.at<float>(0, 1));
@@ -179,46 +225,147 @@ cv::Mat generate_roi(const cv::Mat& image, const cv::Mat& box) {
     return image(cv::Rect(x1, y1, x2 - x1, y2 - y1));
 }
 
+// è§£å†³è£…ç”²æ¿ç¯æ¡çš„ç²¾ç¡®å®šä½é—®é¢˜ï¼Œç»“åˆROIå¤„ç†
+std::vector<DetectionResult> solve_light(const std::vector<DetectionResult>& armorVertices_vector, cv::Mat& img_raw, const std::string& engine_file_path) {
+    std::vector<DetectionResult> p;
+    std::string temp_image_path;
+    for (const auto& armorVertices : armorVertices_vector) {
+        if (armorVertices.box.rows == 4) {
+            cv::Point2f up_left = cv::Point2f(armorVertices.box.at<float>(0, 0), armorVertices.box.at<float>(0, 1));
+            cv::Point2f down_left = cv::Point2f(armorVertices.box.at<float>(1, 0), armorVertices.box.at<float>(1, 1));
+            cv::Point2f down_right = cv::Point2f(armorVertices.box.at<float>(2, 0), armorVertices.box.at<float>(2, 1));
+            cv::Point2f up_right = cv::Point2f(armorVertices.box.at<float>(3, 0), armorVertices.box.at<float>(3, 1));
+
+            // roiåŒºåŸŸ
+            cv::Size s = img_raw.size();
+            float roi_width = abs((up_left.x - down_right.x) / 4);
+            float roi_height = abs((up_left.y - down_right.y) / 4);
+
+            cv::Rect roi;
+            // å·¦è¾¹ç¯æ¡
+            down_left.x = std::max(down_left.x - roi_width, 0.0f);
+            down_left.y = std::min(down_left.y + roi_height, static_cast<float>(s.height));
+            up_left.x = std::max(up_left.x - roi_width, 0.0f);
+            up_left.y = std::max(up_left.y - roi_height, 0.0f);
+            roi.x = std::min(up_left.x, down_left.x);
+            roi.y = std::min(up_left.y, down_left.y);
+            up_right.x = std::min(up_right.x + roi_width, static_cast<float>(s.width));
+            up_right.y = std::max(up_right.y - roi_height, 0.0f);
+            down_right.x = std::min(down_right.x + roi_width, static_cast<float>(s.width));
+            down_right.y = std::min(down_right.y + roi_height, static_cast<float>(s.height));
+            roi.width = std::max(abs(up_left.x - down_right.x), abs(up_right.x - down_left.x));
+            roi.height = std::max(abs(up_left.y - down_right.y), abs(up_right.y - down_left.y));
+
+            cv::Mat clone_left = img_raw(roi).clone();
+            temp_image_path = "temp_image.jpg";
+            cv::imwrite(temp_image_path, clone_left);
+            std::vector<DetectionResult> left_boxes = tensorrt_detection(temp_image_path, engine_file_path);
+            std::remove(temp_image_path.c_str());
+
+            for (auto& box : left_boxes) {
+                box.box.at<float>(0, 0) += roi.x;
+                box.box.at<float>(0, 1) += roi.y;
+                box.box.at<float>(1, 0) += roi.x;
+                box.box.at<float>(1, 1) += roi.y;
+                box.box.at<float>(2, 0) += roi.x;
+                box.box.at<float>(2, 1) += roi.y;
+                box.box.at<float>(3, 0) += roi.x;
+                box.box.at<float>(3, 1) += roi.y;
+                p.push_back(box);
+            }
+
+            // å³è¾¹ç¯æ¡
+            down_left.x = std::max(down_right.x - roi_width, 0.0f);
+            down_left.y = std::min(down_right.y + roi_height, static_cast<float>(s.height));
+            up_left.x = std::max(up_right.x - roi_width, 0.0f);
+            up_left.y = std::max(up_left.y - roi_height, 0.0f);
+            roi.x = std::min(up_left.x, down_left.x);
+            roi.y = std::min(up_left.y, down_left.y);
+            up_right.x = std::min(up_right.x + roi_width, static_cast<float>(s.width));
+            up_right.y = std::max(up_right.y - roi_height, 0.0f);
+            down_right.x = std::min(down_right.x + roi_width, static_cast<float>(s.width));
+            down_right.y = std::min(down_right.y + roi_height, static_cast<float>(s.height));
+            roi.width = std::max(abs(up_left.x - down_right.x), abs(up_right.x - down_left.x));
+            roi.height = std::max(abs(up_left.y - down_right.y), abs(up_right.y - down_left.y));
+
+            cv::Mat clone_right = img_raw(roi).clone();
+            temp_image_path = "temp_image.jpg";
+            cv::imwrite(temp_image_path, clone_right);
+            std::vector<DetectionResult> right_boxes = tensorrt_detection(temp_image_path, engine_file_path);
+            std::remove(temp_image_path.c_str());
+
+            for (auto& box : right_boxes) {
+                box.box.at<float>(0, 0) += roi.x;
+                box.box.at<float>(0, 1) += roi.y;
+                box.box.at<float>(1, 0) += roi.x;
+                box.box.at<float>(1, 1) += roi.y;
+                box.box.at<float>(2, 0) += roi.x;
+                box.box.at<float>(2, 1) += roi.y;
+                box.box.at<float>(3, 0) += roi.x;
+                box.box.at<float>(3, 1) += roi.y;
+                p.push_back(box);
+            }
+        }
+    }
+    return p;
+}
+
 int main() {
-    // Í¼Æ¬Â·¾¶
-    std::string image_path = "Armor.jpg";
-    // .engine Ä£ĞÍÎÄ¼şÂ·¾¶
-    std::string engine_file_path = "4pointsV16.engine";
+    std::string image_folder = "/home/stark/æ¡Œé¢/ROI_Expand/images";
+    std::string label_folder = "/home/stark/æ¡Œé¢/ROI_Expand/labels";
+    std::string engine_file_path = "/home/stark/æ¡Œé¢/ROI_Expand/4pointsV16.engine";
 
-    cv::Mat image = cv::imread(image_path);
-    if (image.empty()) {
-        std::cerr << "Failed to read image: " << image_path << std::endl;
-        return -1;
+    std::cout << "å¼€å§‹éå†å›¾ç‰‡æ–‡ä»¶å¤¹: " << image_folder << std::endl;
+    for (const auto& entry : fs::directory_iterator(image_folder)) {
+        if (entry.is_regular_file() && (entry.path().extension() == ".jpg" || entry.path().extension() == ".jpeg")) {
+            std::string image_path = entry.path().string();
+            std::string image_name = entry.path().stem().string();
+            std::string label_path = label_folder + "/" + image_name + ".txt";
+
+            std::cout << "æ­£åœ¨å¤„ç†å›¾ç‰‡: " << image_path << std::endl;
+            cv::Mat image = cv::imread(image_path);
+            if (image.empty()) {
+                std::cerr << "Failed to read image: " << image_path << std::endl;
+                continue;
+            }
+
+            std::cout << "æ­£åœ¨è¯»å–æ ‡ç­¾æ–‡ä»¶: " << label_path << std::endl;
+            // è¯»å–æ ‡ç­¾æ–‡ä»¶
+            std::vector<DetectionResult> read_boxes = read_detection_result(label_path);
+
+            // è§£å†³è£…ç”²æ¿ç¯æ¡çš„ç²¾ç¡®å®šä½é—®é¢˜ï¼Œç»“åˆROIå¤„ç†
+            std::cout << "æ­£åœ¨å¤„ç†ç¯æ¡å®šä½é—®é¢˜..." << std::endl;
+            std::vector<DetectionResult> refined_boxes = solve_light(read_boxes, image, engine_file_path);
+
+            std::vector<DetectionResult> expanded_boxes;
+            for (const auto& box : refined_boxes) {
+                // æ‰©å¤§æ£€æµ‹æ¡†
+                cv::Mat expanded_box = expand_bounding_box(box.box, image);
+                expanded_boxes.emplace_back(DetectionResult{expanded_box, box.score, box.class_id});
+
+                // ç”Ÿæˆ ROI åŒºåŸŸ
+                cv::Mat roi = generate_roi(image, expanded_box);
+
+                // ç»˜åˆ¶åŸå§‹æ£€æµ‹æ¡†ï¼ˆç»¿è‰²ï¼‰
+                cv::rectangle(image, cv::Point(box.box.at<float>(0, 0), box.box.at<float>(0, 1)), cv::Point(box.box.at<float>(2, 0), box.box.at<float>(2, 1)), cv::Scalar(0, 255, 0), 2);
+
+                // ç»˜åˆ¶æ‰©å±•åçš„æ£€æµ‹æ¡†ï¼ˆçº¢è‰²ï¼‰
+                cv::rectangle(image, cv::Point(expanded_box.at<float>(0, 0), expanded_box.at<float>(0, 1)), cv::Point(expanded_box.at<float>(2, 0), expanded_box.at<float>(2, 1)), cv::Scalar(0, 0, 255), 2);
+
+                // æ˜¾ç¤ºåŸå§‹å›¾ç‰‡å’Œ ROI åŒºåŸŸ
+                cv::imshow("Original Image with ROI", image);
+                cv::imshow("ROI", roi);
+                cv::waitKey(0);
+            }
+
+            // ä¿å­˜æ‰©å¤§åçš„æ£€æµ‹æ¡†ç»“æœåˆ°æ–°çš„ txt æ–‡ä»¶
+            std::string output_label_path = label_folder + "/" + image_name + "_expanded.txt";
+            std::cout << "æ­£åœ¨ä¿å­˜å¤„ç†åçš„æ ‡ç­¾æ–‡ä»¶: " << output_label_path << std::endl;
+            save_detection_result(expanded_boxes, output_label_path);
+        }
     }
-
-    // Ê¹ÓÃ TensorRT Ä£ĞÍ½øĞĞ¼ì²â
-    std::vector<cv::Mat> detected_boxes = tensorrt_detection(image_path, engine_file_path);
-
-    // ±£´æ¼ì²â½á¹ûµ½ txt ÎÄ¼ş
-    save_detection_result(detected_boxes, "detection_result.txt");
-
-    // ¶ÁÈ¡ txt ÎÄ¼şÖĞµÄËÄµãÊı¾İ
-    std::vector<cv::Mat> read_boxes = read_detection_result("detection_result.txt");
-
-    for (const auto& box : read_boxes) {
-        // À©´ó¼ì²â¿ò
-        cv::Mat expanded_box = expand_bounding_box(box, image);
-
-        // Éú³É ROI ÇøÓò
-        cv::Mat roi = generate_roi(image, expanded_box);
-
-        // »æÖÆÔ­Ê¼¼ì²â¿ò£¨ÂÌÉ«£©
-        cv::rectangle(image, cv::Point(box.at<float>(0, 0), box.at<float>(0, 1)), cv::Point(box.at<float>(2, 0), box.at<float>(2, 1)), cv::Scalar(0, 255, 0), 2);
-
-        // »æÖÆÀ©Õ¹ºóµÄ¼ì²â¿ò£¨ºìÉ«£©
-        cv::rectangle(image, cv::Point(expanded_box.at<float>(0, 0), expanded_box.at<float>(0, 1)), cv::Point(expanded_box.at<float>(2, 0), expanded_box.at<float>(2, 1)), cv::Scalar(0, 0, 255), 2);
-
-        // ÏÔÊ¾Ô­Ê¼Í¼Æ¬ºÍ ROI ÇøÓò
-        cv::imshow("Original Image with ROI", image);
-        cv::imshow("ROI", roi);
-        cv::waitKey(0);
-    }
-
+    cv::waitKey(1000);//æ­¤å¤„å¾…è°ƒè¯•
     cv::destroyAllWindows();
     return 0;
-}
+}    
+
