@@ -369,3 +369,97 @@ int main() {
     return 0;
 }    
 
+
+
+
+
+
+
+
+
+// 扩大检测框，基于ROI逻辑修正
+cv::Mat expand_bounding_box(const cv::Mat& box, const cv::Mat& image, const cv::Size& s, float roi_width, float roi_height) {
+    cv::Point2f up_left = cv::Point2f(box.at<float>(0, 0), box.at<float>(0, 1));
+    cv::Point2f down_left = cv::Point2f(box.at<float>(1, 0), box.at<float>(1, 1));
+    cv::Point2f down_right = cv::Point2f(box.at<float>(2, 0), box.at<float>(2, 1));
+    cv::Point2f up_right = cv::Point2f(box.at<float>(3, 0), box.at<float>(3, 1));
+
+    down_left.x = std::max(down_left.x - roi_width, 0.0f);
+    down_left.y = std::min(down_left.y + roi_height, static_cast<float>(s.height));
+    up_left.x = std::max(up_left.x - roi_width, 0.0f);
+    up_left.y = std::max(up_left.y - roi_height, 0.0f);
+    up_right.x = std::min(up_right.x + roi_width, static_cast<float>(s.width));
+    up_right.y = std::max(up_right.y - roi_height, 0.0f);
+    down_right.x = std::min(down_right.x + roi_width, static_cast<float>(s.width));
+    down_right.y = std::min(down_right.y + roi_height, static_cast<float>(s.height));
+
+    cv::Mat new_box = (cv::Mat_<float>(4, 2) << up_left.x, up_left.y, down_left.x, down_left.y, down_right.x, down_right.y, up_right.x, up_right.y);
+    return new_box;
+}
+
+// 生成 ROI 区域，基于ROI逻辑修正
+cv::Mat generate_roi(const cv::Mat& image, const cv::Mat& box) {
+    cv::Point2f up_left = cv::Point2f(box.at<float>(0, 0), box.at<float>(0, 1));
+    cv::Point2f down_right = cv::Point2f(box.at<float>(2, 0), box.at<float>(2, 1));
+
+    int x1 = static_cast<int>(std::min(up_left.x, down_right.x));
+    int y1 = static_cast<int>(std::min(up_left.y, down_right.y));
+    int x2 = static_cast<int>(std::max(up_left.x, down_right.x));
+    int y2 = static_cast<int>(std::max(up_left.y, down_right.y));
+
+    return image(cv::Rect(x1, y1, x2 - x1, y2 - y1));
+}
+
+// 解决装甲板灯条的精确定位问题，结合ROI处理
+std::vector<cv::Mat> solve_light(const std::vector<cv::Mat>& armorVertices_vector, cv::Mat& img_raw) {
+    std::vector<cv::Mat> p;
+    for (const auto& armorVertices : armorVertices_vector) {
+        if (armorVertices.rows == 4) {
+            cv::Point2f up_left = cv::Point2f(armorVertices.at<float>(0, 0), armorVertices.at<float>(0, 1));
+            cv::Point2f down_left = cv::Point2f(armorVertices.at<float>(1, 0), armorVertices.at<float>(1, 1));
+            cv::Point2f down_right = cv::Point2f(armorVertices.at<float>(2, 0), armorVertices.at<float>(2, 1));
+            cv::Point2f up_right = cv::Point2f(armorVertices.at<float>(3, 0), armorVertices.at<float>(3, 1));
+
+            // roi区域
+            cv::Size s = img_raw.size();
+            float roi_width = abs((up_left.x - down_right.x) / 4);
+            float roi_height = abs((up_left.y - down_right.y) / 4);
+
+            cv::Rect roi;
+            // 左边灯条
+            cv::Mat left_box = (cv::Mat_<float>(4, 2) << up_left.x, up_left.y, down_left.x, down_left.y, down_right.x, down_right.y, up_right.x, up_right.y);
+            cv::Mat expanded_left_box = expand_bounding_box(left_box, img_raw, s, roi_width, roi_height);
+            cv::Mat left_roi = generate_roi(img_raw, expanded_left_box);
+            std::vector<cv::Mat> left_boxes = tensorrt_detection(left_roi, "4pointsV16.engine");
+            for (auto& box : left_boxes) {
+                box.at<float>(0, 0) += expanded_left_box.at<float>(0, 0);
+                box.at<float>(0, 1) += expanded_left_box.at<float>(0, 1);
+                box.at<float>(1, 0) += expanded_left_box.at<float>(0, 0);
+                box.at<float>(1, 1) += expanded_left_box.at<float>(0, 1);
+                box.at<float>(2, 0) += expanded_left_box.at<float>(0, 0);
+                box.at<float>(2, 1) += expanded_left_box.at<float>(0, 1);
+                box.at<float>(3, 0) += expanded_left_box.at<float>(0, 0);
+                box.at<float>(3, 1) += expanded_left_box.at<float>(0, 1);
+                p.push_back(box);
+            }
+
+            // 右边灯条
+            cv::Mat right_box = (cv::Mat_<float>(4, 2) << up_right.x, up_right.y, down_right.x, down_right.y, down_left.x, down_left.y, up_left.x, up_left.y);
+            cv::Mat expanded_right_box = expand_bounding_box(right_box, img_raw, s, roi_width, roi_height);
+            cv::Mat right_roi = generate_roi(img_raw, expanded_right_box);
+            std::vector<cv::Mat> right_boxes = tensorrt_detection(right_roi, "4pointsV16.engine");
+            for (auto& box : right_boxes) {
+                box.at<float>(0, 0) += expanded_right_box.at<float>(0, 0);
+                box.at<float>(0, 1) += expanded_right_box.at<float>(0, 1);
+                box.at<float>(1, 0) += expanded_right_box.at<float>(0, 0);
+                box.at<float>(1, 1) += expanded_right_box.at<float>(0, 1);
+                box.at<float>(2, 0) += expanded_right_box.at<float>(0, 0);
+                box.at<float>(2, 1) += expanded_right_box.at<float>(0, 1);
+                box.at<float>(3, 0) += expanded_right_box.at<float>(0, 0);
+                box.at<float>(3, 1) += expanded_right_box.at<float>(0, 1);
+                p.push_back(box);
+            }
+        }
+    }
+    return p;
+}
