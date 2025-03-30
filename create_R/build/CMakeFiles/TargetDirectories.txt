@@ -1,0 +1,3 @@
+/home/stark/create_R/build/CMakeFiles/create_R.dir
+/home/stark/create_R/build/CMakeFiles/edit_cache.dir
+/home/stark/create_R/build/CMakeFiles/rebuild_cache.dir
