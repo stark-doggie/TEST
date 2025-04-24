@@ -1,2 +1,4 @@
-# TEST
-用于算法组的程序文件储存
+# ballistic_solution
+
+TODO: 采用龙格库塔法解算弹道方程
+
