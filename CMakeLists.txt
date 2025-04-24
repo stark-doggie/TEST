@@ -1,43 +1,48 @@
-cmake_minimum_required(VERSION 3.10)
-project(ROI_Expand)
+cmake_minimum_required(VERSION 3.8)
+project(autoaim_interfaces)
 
-set(CMAKE CXX STANDARD 14)
-set(CMAKE CXX STANDARD REQUIRED ON)
-
-find_package(OpenCV REQUIRED)
-find_package(CUDA REQUIRED)
-
-set(TENSORRT_ROOT /usr/local/TensorRT-10.3.0.26)
-set(TENSORRT_INCLUDE_DIR ${TENSORRT_ROOT}/include)
-set(TENSORRT_LIBRARY_DIR ${TENSORRT_ROOT}/lib)
-set(TENSORRT_LIBRARIES nvinfer nvinfer_plugin)
-
-if(NOT EXISTS ${TENSORRT_INCLUDE_DIR}/NvInfer.h)
-    message(FATAL_ERROR "TensorRT headers not found in ${TENSORRT_INCLUDE_DIR}")
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-foreach(LIB ${TENSORRT_LIBRARIES})
-   find_library(${LIB}_LIBRARY ${LIB} PATHS ${TENSORRT_LIBRARY_DIR} NO_DEFAULT_PATH)
-   if(NOT ${LIB}_LIBRARY)
-       message(FATAL_ERROR "TensorRT library ${LIB} not found in ${TENSORRT_LIBRARY_DIR}")
-   endif()
-   list(APPEND_TENSORRT_LINK_LIBRARIES ${${LIB}_LIBRARY}) 
-endforeach()   
+# find dependencies
+find_package(ament_cmake REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(geometry_msgs REQUIRED)
+# uncomment the following section in order to fill in
+# further dependencies manually.
+# find_package(<dependency> REQUIRED)
 
-add_executable(roi_expand ROI_expand.cpp)
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  # the following line skips the linter which checks for copyrights
+  # comment the line when a copyright and license is added to all source files
+  set(ament_cmake_copyright_FOUND TRUE)
+  # the following line skips cpplint (only works in a git repo)
+  # comment the line when this package is in a git repo and when
+  # a copyright and license is added to all source files
+  set(ament_cmake_cpplint_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+endif()
 
-target_compile_options(roi_expand PRIVATE -Wall -Wextra -Wpedantic)
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/Armor.msg"
+  "msg/Armors.msg"
+  "msg/AimInfo.msg"
+  "msg/Target.msg"
+  "msg/AimTheta.msg"
+  "msg/PointData.msg"
+  "msg/Buff.msg"
+  "msg/Buffs.msg"
+  "msg/Outpost.msg"
+  "msg/Outposts.msg"
+  "msg/BuffPredictorInfo.msg"
 
-target_link_libraries(roi_expand PRIVATE 
-    ${OpenCV_LIBS}
-    ${TensorRT_LIBRARIES}
-    ${CUDA_LIBRARIES}
+  DEPENDENCIES
+    std_msgs
+    geometry_msgs
+    
+    rosidl_typesupport_fastrtps_cpp  # 添加这一行，指定生成 fastrtps_cpp 类型支持插件
 )
 
-target_include_directories(roi_expand PRIVATE 
-    ${OpenCV_INCLUDE_DIRS}
-    ${TensorRT_INCLUDE_DIRS}
-    ${CUDA__INCLUDE_DIRS}
-)
-
-install(TARGETS roi_expand DESTINATION bin)
+ament_package()
