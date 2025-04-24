@@ -1,0 +1,9 @@
+hik_camera:
+  ros__parameters:
+    camera_name: hik_camera
+    use_sensor_data_qos: false
+    # camera_info_url: package://mosas_bringup/config/camera_info.yaml
+    exposure_time: 6000.0
+    gain: 12.0
+    camera_matrix: [2358.125070, 0.000000, 743.213621, 0.000000, 2357.300407, 563.210311, 0.000000, 0.000000, 1.000000]
+    distortion_coeff: [-0.083754, 0.222157, 0.000000, 0.000000, 0.109514]

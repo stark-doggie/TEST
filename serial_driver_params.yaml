@@ -1,0 +1,5 @@
+serial_driver_node:  
+  ros__parameters: 
+    timestamp_offset: 0.006
+    RADIUS: 0.20
+    DEBUG: false
