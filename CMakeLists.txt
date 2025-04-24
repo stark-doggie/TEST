@@ -1,43 +1,93 @@
-cmake_minimum_required(VERSION 3.10)
-project(ROI_Expand)
-
-set(CMAKE CXX STANDARD 14)
-set(CMAKE CXX STANDARD REQUIRED ON)
-
-find_package(OpenCV REQUIRED)
-find_package(CUDA REQUIRED)
-
-set(TENSORRT_ROOT /usr/local/TensorRT-10.3.0.26)
-set(TENSORRT_INCLUDE_DIR ${TENSORRT_ROOT}/include)
-set(TENSORRT_LIBRARY_DIR ${TENSORRT_ROOT}/lib)
-set(TENSORRT_LIBRARIES nvinfer nvinfer_plugin)
-
-if(NOT EXISTS ${TENSORRT_INCLUDE_DIR}/NvInfer.h)
-    message(FATAL_ERROR "TensorRT headers not found in ${TENSORRT_INCLUDE_DIR}")
+cmake_minimum_required(VERSION 3.8)
+set(CMAKE_CXX_STANDARD 17)
+project(detector_dl)
+add_definitions(-w)
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-foreach(LIB ${TENSORRT_LIBRARIES})
-   find_library(${LIB}_LIBRARY ${LIB} PATHS ${TENSORRT_LIBRARY_DIR} NO_DEFAULT_PATH)
-   if(NOT ${LIB}_LIBRARY)
-       message(FATAL_ERROR "TensorRT library ${LIB} not found in ${TENSORRT_LIBRARY_DIR}")
-   endif()
-   list(APPEND_TENSORRT_LINK_LIBRARIES ${${LIB}_LIBRARY}) 
-endforeach()   
+# find dependencies
+find_package(ament_cmake_auto REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(OpenCV 4 REQUIRED)
+find_package(CUDA REQUIRED)
+ament_auto_find_build_dependencies()
 
-add_executable(roi_expand ROI_expand.cpp)
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  # the following line skips the linter which checks for copyrights
+  # comment the line when a copyright and license is added to all source files
+  set(ament_cmake_copyright_FOUND TRUE)
+  # the following line skips cpplint (only works in a git repo)
+  # comment the line when this package is in a git repo and when
+  # a copyright and license is added to all source files
+  set(ament_cmake_cpplint_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
+endif()
 
-target_compile_options(roi_expand PRIVATE -Wall -Wextra -Wpedantic)
+set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} -DMY_DEF=1")
+SET(CUDA_NVCC_FLAGS "-arch=sm_87" CACHE STRING "nvcc flags" FORCE)
+SET(CUDA_VERBOSE_BUILD ON CACHE BOOL "nvcc verbose" FORCE)
 
-target_link_libraries(roi_expand PRIVATE 
-    ${OpenCV_LIBS}
-    ${TensorRT_LIBRARIES}
-    ${CUDA_LIBRARIES}
+cuda_add_library(detector_core SHARED
+  src/cu/Detector.cpp
+  src/cu/postprocess.cu
+  src/cu/preprocess.cu
 )
 
-target_include_directories(roi_expand PRIVATE 
-    ${OpenCV_INCLUDE_DIRS}
-    ${TensorRT_INCLUDE_DIRS}
-    ${CUDA__INCLUDE_DIRS}
+#cuda & tensorrt
+target_include_directories(detector_core PUBLIC
+  /usr/local/cuda-12.2/include
+  /usr/include/aarch64-linux-gnu
+  include
+  ${CUDA_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
-install(TARGETS roi_expand DESTINATION bin)
+target_link_directories(detector_core PUBLIC
+  /usr/local/cuda-12.2/lib64
+  /usr/lib/aarch64-linux-gnu
+)
+
+target_link_libraries(detector_core
+  nvinfer
+  cudart
+  nvonnxparser
+  ${OpenCV_LIBS}
+)
+
+ament_auto_add_library(${PROJECT_NAME} SHARED 
+  src/DetectorNode.cpp
+)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+  include
+  ${OpenCV_INCLUDE_DIRS}
+)
+
+target_link_libraries(${PROJECT_NAME}
+  detector_core
+  ${OpenCV_LIBS}
+)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+  CUDA_SEPARABLE_COMPILATION ON
+  CUDA_RESOLVE_DEVICE_SYMBOLS ON
+)
+
+rclcpp_components_register_node(${PROJECT_NAME}
+  PLUGIN DetectorDlNode
+  EXECUTABLE ${PROJECT_NAME}_node
+)
+
+install(TARGETS
+  detector_core
+  DESTINATION lib
+)
+
+ament_auto_package(
+  INSTALL_TO_SHARE
+)
+
+

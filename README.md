@@ -1,2 +1,6 @@
-# TEST
-用于算法组的程序文件储存
+# detector_dl
+
+基于深度学习的ros2 detector包，适用于orin
+
+
+
