@@ -1,43 +1,65 @@
-cmake_minimum_required(VERSION 3.10)
-project(ROI_Expand)
+cmake_minimum_required(VERSION 3.8)
+project(hik_publisher)
+# Use C++ 17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE CXX STANDARD 14)
-set(CMAKE CXX STANDARD REQUIRED ON)
 
-find_package(OpenCV REQUIRED)
-find_package(CUDA REQUIRED)
-
-set(TENSORRT_ROOT /usr/local/TensorRT-10.3.0.26)
-set(TENSORRT_INCLUDE_DIR ${TENSORRT_ROOT}/include)
-set(TENSORRT_LIBRARY_DIR ${TENSORRT_ROOT}/lib)
-set(TENSORRT_LIBRARIES nvinfer nvinfer_plugin)
-
-if(NOT EXISTS ${TENSORRT_INCLUDE_DIR}/NvInfer.h)
-    message(FATAL_ERROR "TensorRT headers not found in ${TENSORRT_INCLUDE_DIR}")
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-foreach(LIB ${TENSORRT_LIBRARIES})
-   find_library(${LIB}_LIBRARY ${LIB} PATHS ${TENSORRT_LIBRARY_DIR} NO_DEFAULT_PATH)
-   if(NOT ${LIB}_LIBRARY)
-       message(FATAL_ERROR "TensorRT library ${LIB} not found in ${TENSORRT_LIBRARY_DIR}")
-   endif()
-   list(APPEND_TENSORRT_LINK_LIBRARIES ${${LIB}_LIBRARY}) 
-endforeach()   
+# find dependencies
+find_package(ament_cmake_auto REQUIRED)
+ament_auto_find_build_dependencies()
 
-add_executable(roi_expand ROI_expand.cpp)
-
-target_compile_options(roi_expand PRIVATE -Wall -Wextra -Wpedantic)
-
-target_link_libraries(roi_expand PRIVATE 
-    ${OpenCV_LIBS}
-    ${TensorRT_LIBRARIES}
-    ${CUDA_LIBRARIES}
+ament_auto_add_library(${PROJECT_NAME} SHARED
+  src/HikCameraNode.cpp
 )
 
-target_include_directories(roi_expand PRIVATE 
-    ${OpenCV_INCLUDE_DIRS}
-    ${TensorRT_INCLUDE_DIRS}
-    ${CUDA__INCLUDE_DIRS}
+target_include_directories(${PROJECT_NAME} PUBLIC
+  /opt/MVS/include
+  include
 )
 
-install(TARGETS roi_expand DESTINATION bin)
+# target_link_directories(${PROJECT_NAME} PUBLIC
+#   /opt/MVS/lib/64
+# )
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+  target_link_directories(${PROJECT_NAME} PUBLIC
+    /opt/MVS/lib/aarch64
+  )
+else()
+  target_link_directories(${PROJECT_NAME} PUBLIC
+    /opt/MVS/lib/64
+  )
+endif()
+
+
+
+target_link_libraries(${PROJECT_NAME}
+  FormatConversion
+  MediaProcess
+  MvCameraControl
+  MVRender
+  MvUsb3vTL
+)
+
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  list(APPEND AMENT_LINT_AUTO_EXCLUDE
+    ament_cmake_copyright
+    ament_cmake_cpplint
+    ament_cmake_uncrustify
+  )
+  ament_lint_auto_find_test_dependencies()
+endif()
+
+rclcpp_components_register_node(${PROJECT_NAME}
+  PLUGIN HikCameraNode
+  EXECUTABLE ${PROJECT_NAME}_node
+)
+
+ament_auto_package(
+  INSTALL_TO_SHARE
+)
